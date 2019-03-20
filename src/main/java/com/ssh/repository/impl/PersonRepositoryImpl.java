@@ -23,6 +23,10 @@ public class PersonRepositoryImpl implements PersonRepository {
         return this.sessionFactory.openSession();
     }
 
+    private void closeSession(){
+        sessionFactory.close();
+    }
+
     public Person load(Long id) {
         return (Person)getCurrentSession().load(Person.class,id);
     }
@@ -40,7 +44,11 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     public Long save(Person entity) {
-        return (Long)getCurrentSession().save(entity);
+        try {
+            return (Long)getCurrentSession().save(entity);
+        } finally {
+            closeSession();
+        }
     }
 
     public void saveOrUpdate(Person entity) {

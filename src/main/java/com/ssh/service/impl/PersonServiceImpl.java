@@ -1,8 +1,27 @@
 package com.ssh.service.impl;
 
+import com.ssh.entity.Person;
+import com.ssh.repository.PersonRepository;
+import com.ssh.service.PersonService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 /**
- * @author Evim
- * @date 2019/3/1419:57
- **/
-public class PersonServiceImpl {
+ * Created by Evin
+ * On 2/2/2017.2:40 PM
+ */
+@Service
+public class PersonServiceImpl implements PersonService {
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    public Long savePerson() {
+        Person person = new Person();
+        person.setUsername("XRog");
+        person.setPhone("18381005946");
+        person.setAddress("chenDu");
+        person.setRemark("this is XRog");
+        return personRepository.save(person);
+    }
 }
