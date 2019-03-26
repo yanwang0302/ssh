@@ -1,5 +1,8 @@
 package com.ssh.controllers;
 
+import java.util.List;
+
+import com.ssh.entity.Person;
 import com.ssh.service.PersonService;
 import com.ssh.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +26,23 @@ public class MainController {
 
     @RequestMapping(value = "savePerson", method = RequestMethod.GET)
     @ResponseBody
-    public String savePerson(){
+    public long savePerson(){
         try {
-            personService.savePerson();
+            return personService.savePerson();
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return "success!";
+        return 123L;
+    }
+    @RequestMapping(value = "findAllPerson")
+    @ResponseBody
+    public List<Person> findAllPerson(){
+        return personService.findAll();
+    }
+    @RequestMapping(value = "updatePerson")
+    @ResponseBody
+    public void updatePerson(){
+        personService.updatePerson(1L);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)

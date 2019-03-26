@@ -13,7 +13,7 @@
     <!--启动springmvc注解功能-->
     <mvc:annotation-driven/>
     <!--配置注解扫描包-->
-    <context:component-scan base-package="com.ssh"/>
+    <context:component-scan base-package="com.ssh.controllers"/>
     <!--对模型视图的解析加上前缀与后缀-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>

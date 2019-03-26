@@ -1,5 +1,7 @@
 package com.ssh.service;
 
+import java.util.List;
+
 import com.ssh.entity.Person;
 
 /**
@@ -8,4 +10,8 @@ import com.ssh.entity.Person;
  */
 public interface PersonService {
     Long savePerson();
+
+    List<Person> findAll();
+
+    void updatePerson(Long id);
 }

@@ -2,8 +2,10 @@ package com.ssh.repository.impl;
 
 import com.ssh.repository.PersonRepository;
 import com.ssh.entity.Person;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,10 +25,6 @@ public class PersonRepositoryImpl implements PersonRepository {
         return this.sessionFactory.openSession();
     }
 
-    private void closeSession(){
-        sessionFactory.close();
-    }
-
     public Person load(Long id) {
         return (Person)getCurrentSession().load(Person.class,id);
     }
@@ -36,7 +34,9 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     public List<Person> findAll() {
-        return null;
+        SQLQuery sqlQuery = getCurrentSession().createSQLQuery("select * from person");
+        sqlQuery.addEntity(Person.class);
+        return sqlQuery.list();
     }
 
     public void persist(Person entity) {
@@ -44,11 +44,20 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     public Long save(Person entity) {
+        Session session = getCurrentSession();
         try {
-            return (Long)getCurrentSession().save(entity);
-        } finally {
-            closeSession();
+            Transaction t = session.beginTransaction();
+            Long lo =  (Long)session.save(entity);
+            t.commit();
+            session.flush();
+            return lo;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            //session.close();
+            //sessionFactory.close();
         }
+        return 123L;
     }
 
     public void saveOrUpdate(Person entity) {

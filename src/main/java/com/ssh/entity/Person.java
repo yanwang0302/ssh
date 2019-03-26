@@ -1,5 +1,6 @@
 package com.ssh.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 import lombok.Data;
@@ -10,8 +11,8 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "Person")
-public class Person {
+@Table(name = "person")
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue
